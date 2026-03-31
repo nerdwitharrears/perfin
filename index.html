@@ -160,9 +160,21 @@
   }
 
   .nav-item .icon {
-    font-size: 1.18rem;
     width: 24px;
-    text-align: center;
+    height: 24px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .nav-item .icon svg {
+    width: 18px;
+    height: 18px;
+    stroke: currentColor;
+    fill: none;
+    stroke-width: 1.85;
+    stroke-linecap: round;
+    stroke-linejoin: round;
   }
 
   /* ── MAIN CONTENT ── */
@@ -395,10 +407,20 @@
     right: 18px;
     top: 50%;
     transform: translateY(-50%);
-    font-size: 2.7rem;
-    opacity: 0.12;
-    filter: saturate(0);
+    width: 56px;
+    height: 56px;
+    border-radius: 18px;
+    font-size: 0;
+    opacity: 1;
+    filter: none;
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    background: rgba(255, 255, 255, 0.04);
   }
+
+  .summary-card.income .icon-bg { background: linear-gradient(135deg, rgba(115, 240, 183, 0.16), rgba(115, 240, 183, 0.05)); }
+  .summary-card.expense .icon-bg { background: linear-gradient(135deg, rgba(255, 122, 144, 0.16), rgba(255, 122, 144, 0.05)); }
+  .summary-card.invest .icon-bg { background: linear-gradient(135deg, rgba(248, 197, 109, 0.16), rgba(248, 197, 109, 0.05)); }
+  .summary-card.savings .icon-bg { background: linear-gradient(135deg, rgba(121, 183, 255, 0.16), rgba(121, 183, 255, 0.05)); }
 
   /* ── CHART ── */
   .chart-card {
@@ -863,8 +885,11 @@
   .bottom-nav-inner {
     display: grid;
     grid-template-columns: repeat(5, minmax(0, 1fr));
+    width: 100%;
     height: calc(100% - env(safe-area-inset-bottom));
     padding-bottom: env(safe-area-inset-bottom);
+    align-items: stretch;
+    justify-items: stretch;
   }
 
   .bottom-nav-item {
@@ -880,21 +905,54 @@
     transition: color 0.2s, transform 0.2s;
     border: none;
     background: none;
-    padding: 0;
+    padding: 8px 2px 6px;
     min-width: 0;
+    width: 100%;
     text-align: center;
+    position: relative;
   }
 
-  .bottom-nav-item .bicon { font-size: 1.3rem; }
+  .bottom-nav-item .bicon {
+    width: 30px;
+    height: 30px;
+    border-radius: 11px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid rgba(255, 255, 255, 0.06);
+  }
+
+  .bottom-nav-item .bicon svg {
+    width: 16px;
+    height: 16px;
+    stroke: currentColor;
+    fill: none;
+    stroke-width: 1.85;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+
   .bottom-nav-item .blabel {
     display: block;
+    width: 100%;
     max-width: 100%;
     line-height: 1.05;
+    letter-spacing: -0.01em;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
   }
-  .bottom-nav-item.active { color: var(--white); transform: translateY(-1px); }
+  .bottom-nav-item.active {
+    color: var(--white);
+    transform: translateY(-1px);
+  }
+
+  .bottom-nav-item.active .bicon {
+    background: linear-gradient(135deg, rgba(121, 183, 255, 0.2), rgba(115, 240, 183, 0.12));
+    border-color: rgba(255, 255, 255, 0.12);
+    box-shadow: 0 8px 16px rgba(2, 8, 23, 0.22);
+  }
 
   /* ── RESPONSIVE ── */
   @media (max-width: 1200px) {
@@ -1024,7 +1082,15 @@
       gap: 2px;
       font-size: 0.56rem;
     }
-    .bottom-nav-item .bicon { font-size: 1.12rem; }
+    .bottom-nav-item .bicon {
+      width: 26px;
+      height: 26px;
+      border-radius: 10px;
+    }
+    .bottom-nav-item .bicon svg {
+      width: 14px;
+      height: 14px;
+    }
   }
 
   /* ── MODAL ── */
@@ -1182,19 +1248,29 @@
     </div>
     <nav class="sidebar-nav">
       <button class="nav-item active" data-section="dashboard">
-        <span class="icon">📊</span> Dashboard
+        <span class="icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24"><path d="M4 19V9"></path><path d="M10 19V5"></path><path d="M16 19v-7"></path><path d="M22 19v-3"></path></svg>
+        </span> Dashboard
       </button>
       <button class="nav-item" data-section="income">
-        <span class="icon">💵</span> Income
+        <span class="icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24"><rect x="3" y="6" width="18" height="12" rx="3"></rect><path d="M3 10h18"></path><path d="M8 14h4"></path></svg>
+        </span> Income
       </button>
       <button class="nav-item" data-section="expenses">
-        <span class="icon">💳</span> Expenses
+        <span class="icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24"><rect x="2.5" y="6" width="19" height="12" rx="3"></rect><path d="M2.5 10.5h19"></path><path d="M15 14.5h3"></path></svg>
+        </span> Expenses
       </button>
       <button class="nav-item" data-section="investments">
-        <span class="icon">📈</span> Investments
+        <span class="icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24"><path d="M4 19h16"></path><path d="m6 15 4-4 3 3 5-6"></path><path d="M18 8h3v3"></path></svg>
+        </span> Investments
       </button>
       <button class="nav-item" data-section="reports">
-        <span class="icon">📋</span> Reports
+        <span class="icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24"><path d="M9 4h6"></path><path d="M9 2h6v4H9z"></path><path d="M7 4h10a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2Z"></path><path d="M9 10h6"></path><path d="M9 14h6"></path></svg>
+        </span> Reports
       </button>
     </nav>
   </aside>
@@ -1214,22 +1290,22 @@
           <div class="summary-card income">
             <div class="label">Total Income</div>
             <div class="amount" id="dash-income">₹0</div>
-            <div class="icon-bg">💵</div>
+            <div class="icon-bg"></div>
           </div>
           <div class="summary-card expense">
             <div class="label">Total Expenses</div>
             <div class="amount" id="dash-expense">₹0</div>
-            <div class="icon-bg">💳</div>
+            <div class="icon-bg"></div>
           </div>
           <div class="summary-card invest">
             <div class="label">Total Investments</div>
             <div class="amount" id="dash-invest">₹0</div>
-            <div class="icon-bg">📈</div>
+            <div class="icon-bg"></div>
           </div>
           <div class="summary-card savings">
             <div class="label">Net Savings</div>
             <div class="amount" id="dash-savings">₹0</div>
-            <div class="icon-bg">🏦</div>
+            <div class="icon-bg"></div>
           </div>
         </div>
 
@@ -1496,23 +1572,33 @@
 <nav class="bottom-nav">
   <div class="bottom-nav-inner">
     <button class="bottom-nav-item active" data-section="dashboard">
-      <span class="bicon">📊</span>
+      <span class="bicon" aria-hidden="true">
+        <svg viewBox="0 0 24 24"><path d="M4 19V9"></path><path d="M10 19V5"></path><path d="M16 19v-7"></path><path d="M22 19v-3"></path></svg>
+      </span>
       <span class="blabel">Home</span>
     </button>
     <button class="bottom-nav-item" data-section="income">
-      <span class="bicon">💵</span>
+      <span class="bicon" aria-hidden="true">
+        <svg viewBox="0 0 24 24"><rect x="3" y="6" width="18" height="12" rx="3"></rect><path d="M3 10h18"></path><path d="M8 14h4"></path></svg>
+      </span>
       <span class="blabel">Income</span>
     </button>
     <button class="bottom-nav-item" data-section="expenses">
-      <span class="bicon">💳</span>
+      <span class="bicon" aria-hidden="true">
+        <svg viewBox="0 0 24 24"><rect x="2.5" y="6" width="19" height="12" rx="3"></rect><path d="M2.5 10.5h19"></path><path d="M15 14.5h3"></path></svg>
+      </span>
       <span class="blabel">Spend</span>
     </button>
     <button class="bottom-nav-item" data-section="investments">
-      <span class="bicon">📈</span>
+      <span class="bicon" aria-hidden="true">
+        <svg viewBox="0 0 24 24"><path d="M4 19h16"></path><path d="m6 15 4-4 3 3 5-6"></path><path d="M18 8h3v3"></path></svg>
+      </span>
       <span class="blabel">Invest</span>
     </button>
     <button class="bottom-nav-item" data-section="reports">
-      <span class="bicon">📋</span>
+      <span class="bicon" aria-hidden="true">
+        <svg viewBox="0 0 24 24"><path d="M9 4h6"></path><path d="M9 2h6v4H9z"></path><path d="M7 4h10a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2Z"></path><path d="M9 10h6"></path><path d="M9 14h6"></path></svg>
+      </span>
       <span class="blabel">Report</span>
     </button>
   </div>
