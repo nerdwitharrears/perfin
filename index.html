@@ -861,13 +861,13 @@
   }
 
   .bottom-nav-inner {
-    display: flex;
+    display: grid;
+    grid-template-columns: repeat(5, minmax(0, 1fr));
     height: calc(100% - env(safe-area-inset-bottom));
     padding-bottom: env(safe-area-inset-bottom);
   }
 
   .bottom-nav-item {
-    flex: 1;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -881,9 +881,19 @@
     border: none;
     background: none;
     padding: 0;
+    min-width: 0;
+    text-align: center;
   }
 
   .bottom-nav-item .bicon { font-size: 1.3rem; }
+  .bottom-nav-item .blabel {
+    display: block;
+    max-width: 100%;
+    line-height: 1.05;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
   .bottom-nav-item.active { color: var(--white); transform: translateY(-1px); }
 
   /* ── RESPONSIVE ── */
@@ -1004,8 +1014,17 @@
 
   @media (max-width: 400px) {
     .summary-grid { grid-template-columns: 1fr; }
-    .hero-panel h3 { font-size: 1.7rem; }
-    .surface-pill { display: none; }
+    .bottom-nav {
+      left: 8px;
+      right: 8px;
+      bottom: max(8px, env(safe-area-inset-bottom));
+      border-radius: 20px;
+    }
+    .bottom-nav-item {
+      gap: 2px;
+      font-size: 0.56rem;
+    }
+    .bottom-nav-item .bicon { font-size: 1.12rem; }
   }
 
   /* ── MODAL ── */
@@ -1215,7 +1234,7 @@
         </div>
 
         <div class="chart-card">
-          <h3>Last 6 Months Overview</h3>
+          <h3>Last 3 Months Overview</h3>
           <div class="bar-chart" id="bar-chart"></div>
           <div class="chart-legend">
             <div class="legend-item"><div class="legend-dot" style="background:var(--green)"></div>Income</div>
@@ -1478,23 +1497,23 @@
   <div class="bottom-nav-inner">
     <button class="bottom-nav-item active" data-section="dashboard">
       <span class="bicon">📊</span>
-      <span>Home</span>
+      <span class="blabel">Home</span>
     </button>
     <button class="bottom-nav-item" data-section="income">
       <span class="bicon">💵</span>
-      <span>Income</span>
+      <span class="blabel">Income</span>
     </button>
     <button class="bottom-nav-item" data-section="expenses">
       <span class="bicon">💳</span>
-      <span>Expenses</span>
+      <span class="blabel">Spend</span>
     </button>
     <button class="bottom-nav-item" data-section="investments">
       <span class="bicon">📈</span>
-      <span>Invest</span>
+      <span class="blabel">Invest</span>
     </button>
     <button class="bottom-nav-item" data-section="reports">
       <span class="bicon">📋</span>
-      <span>Reports</span>
+      <span class="blabel">Report</span>
     </button>
   </div>
 </nav>
@@ -1592,10 +1611,10 @@ function getMonthRange(year, month) {
   return { from: `${year}-${m}-01`, to: `${year}-${m}-${lastDay}` };
 }
 
-function getLast6Months() {
+function getLast3Months() {
   const months = [];
   const now = new Date();
-  for (let i = 5; i >= 0; i--) {
+  for (let i = 2; i >= 0; i--) {
     const d = new Date(now.getFullYear(), now.getMonth() - i, 1);
     months.push({ year: d.getFullYear(), month: d.getMonth() + 1 });
   }
@@ -1632,7 +1651,7 @@ async function loadDashboard() {
 }
 
 async function loadBarChart() {
-  const months = getLast6Months();
+  const months = getLast3Months();
   const chartEl = document.getElementById('bar-chart');
   chartEl.innerHTML = '<div class="loading"><span class="spinner"></span></div>';
 
