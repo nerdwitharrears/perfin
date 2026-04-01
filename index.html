@@ -1298,9 +1298,14 @@
                 <label>Source</label>
                 <select id="inc-source" required>
                   <option value="">Select source</option>
-                  <option>Salary</option>
-                  <option>Freelance</option>
-                  <option>Other</option>
+                  <option>CYF</option>
+                  <option>Zabito</option>
+                  <option>TVS TS</option>
+                  <option>IT Vedant</option>
+                  <option>Fita</option>
+                  <option>Sindhuja Academy</option>
+                  <option>Dividend</option>
+                  <option>Others</option>
                 </select>
               </div>
               <div class="form-group">
@@ -2102,9 +2107,14 @@ function openEditModal(table, row) {
     <div class="form-group">
       <label>Source</label>
       <select id="edit-cat">
-        <option ${row.source==='Salary'?'selected':''}>Salary</option>
-        <option ${row.source==='Freelance'?'selected':''}>Freelance</option>
-        <option ${row.source==='Other'?'selected':''}>Other</option>
+        <option ${row.source==='CYF'?'selected':''}>CYF</option>
+        <option ${row.source==='Zabito'?'selected':''}>Zabito</option>
+        <option ${row.source==='TVS TS'?'selected':''}>TVS TS</option>
+        <option ${row.source==='IT Vedant'?'selected':''}>IT Vedant</option>
+        <option ${row.source==='Fita'?'selected':''}>Fita</option>
+        <option ${row.source==='Sindhuja Academy'?'selected':''}>Sindhuja Academy</option>
+        <option ${row.source==='Dividend'?'selected':''}>Dividend</option>
+        <option ${row.source==='Others'?'selected':''}>Others</option>
       </select>
     </div>`;
   } else if (table === 'expenses') {
