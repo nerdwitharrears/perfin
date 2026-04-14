@@ -2210,6 +2210,20 @@ document.addEventListener('keydown', (e) => {
   if (e.key === 'Escape' && editState.table) closeModal();
 });
 
+// ── PENDING SEEDS ─────────────────────────────────────────────────────────────
+const pendingExpenses = [
+  { _id: 'exp-mmm-357-20260414', date: '2026-04-14', category: 'Food', amount: 357, notes: 'Madurai Mannar Mess' }
+];
+
+async function seedPendingExpenses() {
+  for (const { _id, ...record } of pendingExpenses) {
+    const key = 'seeded_' + _id;
+    if (localStorage.getItem(key)) continue;
+    const { error } = await db.from('expenses').insert([record]);
+    if (!error) localStorage.setItem(key, '1');
+  }
+}
+
 // ── INIT ─────────────────────────────────────────────────────────────────────
 function init() {
   // Set today's date in topbar
@@ -2225,8 +2239,8 @@ function init() {
   // Reports filter init
   initReportFilters();
 
-  // Load dashboard
-  loadDashboard();
+  // Seed any pending one-time expenses, then load dashboard
+  seedPendingExpenses().then(() => loadDashboard());
 }
 
 init();
